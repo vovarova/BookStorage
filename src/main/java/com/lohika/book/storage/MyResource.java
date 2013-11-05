@@ -1,4 +1,4 @@
-package com.lohika;
+package com.lohika.book.storage;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("myresource")
+@Path("data")
 public class MyResource {
 
     /**
@@ -18,8 +18,10 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
     @GET
+    @Path("/number")
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it23sdsdsddfsfdf3232!";
+        System.out.println("A");
+        return "Got it !";
     }
 }
