@@ -9,14 +9,14 @@ import javax.persistence.EntityManager;
  *         This class is to declare main DAO functionality
  */
 
-public class DaoBase {
-    EntityManager entityManager = null;
+public class BaseDao {
+    private EntityManager entityManager = null;
 
-    public DaoBase() {
+    public BaseDao() {
         entityManager = EMF.createEntityManager();
     }
 
-    public DaoBase(EntityManager entityManager) {
+    public BaseDao(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -60,6 +60,14 @@ public class DaoBase {
         entityManager.getTransaction().begin();
         entityManager.merge(entity);
         entityManager.getTransaction().commit();
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
 
