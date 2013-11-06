@@ -1,10 +1,17 @@
 package com.lohika.book.storage.model;
 
+import javax.persistence.*;
+
 /**
  * User: vroman
- * Model of Book object
+ * Model of Book entity
  */
+@Entity
+@Table(name = "Book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String author;
     private String title;
     private Double price;
@@ -50,6 +57,14 @@ public class Book {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override

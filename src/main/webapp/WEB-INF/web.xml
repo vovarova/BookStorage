@@ -16,4 +16,7 @@
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+    <listener>
+        <listener-class>com.lohika.book.storage.listeners.EMF</listener-class>
+    </listener>
 </web-app>
