@@ -5,6 +5,10 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * @author vroman
+ *         Model of Books collection
+ */
 
 @XmlRootElement
 public class Books {
@@ -25,5 +29,11 @@ public class Books {
 	public void setBookCollection(List<Book> bookCollection) {
 		this.bookCollection = bookCollection;
 	}
-		
+
+    @Override
+    public String toString() {
+        return "Books{" +
+                "bookCollection=" + bookCollection +
+                '}';
+    }
 }

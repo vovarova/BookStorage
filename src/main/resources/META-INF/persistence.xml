@@ -6,6 +6,7 @@
                       transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <class>com.lohika.book.storage.model.Book</class>
+        <class>com.lohika.book.storage.model.BookGenre</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.connection.driver_class"  value="org.h2.Driver" />

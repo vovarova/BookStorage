@@ -11,12 +11,13 @@ import javax.servlet.ServletContextListener;
  * This is custom entityManagerFactory factory
  */
 public class EMF implements ServletContextListener {
+    private static final String PERSISTENCE_UNIT = "persistenceUnit";
 
     private static EntityManagerFactory emf;
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        emf = Persistence.createEntityManagerFactory("persistenceUnit");
+        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class EMF implements ServletContextListener {
 
     /**
      * Create entity manager
-     * @return EntityManager
+     * @return {@link EntityManager}
      */
     public static EntityManager createEntityManager() {
         if (emf == null) {

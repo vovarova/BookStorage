@@ -17,35 +17,35 @@ public class Book {
     private String title;
     private Double price;
     private String contentUrl;
-    
-    @ManyToOne(cascade=CascadeType.PERSIST)
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_genre")
     private BookGenre bookGenre;
 
     public Book() {
     }
 
-	public Book(Integer id, String author, String title, Double price,
-			String contentUrl, BookGenre bookGenre) {
-		this.id = id;
-		this.author = author;
-		this.title = title;
-		this.price = price;
-		this.contentUrl = contentUrl;
-		this.bookGenre = bookGenre;
-	}
-	
-	public Book(String author, String title, Double price,
-			String contentUrl, BookGenre bookGenre) {
-		this.author = author;
-		this.title = title;
-		this.price = price;
-		this.contentUrl = contentUrl;
-		this.bookGenre = bookGenre;
-	}
+    public Book(Integer id, String author, String title, Double price,
+                String contentUrl, BookGenre bookGenre) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.price = price;
+        this.contentUrl = contentUrl;
+        this.bookGenre = bookGenre;
+    }
+
+    public Book(String author, String title, Double price,
+                String contentUrl, BookGenre bookGenre) {
+        this.author = author;
+        this.title = title;
+        this.price = price;
+        this.contentUrl = contentUrl;
+        this.bookGenre = bookGenre;
+    }
 
 
-	public String getContentUrl() {
+    public String getContentUrl() {
         return contentUrl;
     }
 
@@ -86,20 +86,22 @@ public class Book {
     }
 
     public BookGenre getBookGenre() {
-		return bookGenre;
-	}
+        return bookGenre;
+    }
 
-	public void setBookGenre(BookGenre bookGenre) {
-		this.bookGenre = bookGenre;
-	}
+    public void setBookGenre(BookGenre bookGenre) {
+        this.bookGenre = bookGenre;
+    }
 
-	@Override
+    @Override
     public String toString() {
         return "Book{" +
-                "author='" + author + '\'' +
+                "id=" + id +
+                ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 ", contentUrl='" + contentUrl + '\'' +
+                ", bookGenre=" + bookGenre +
                 '}';
     }
 }

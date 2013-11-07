@@ -5,40 +5,51 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * @author vroman
+ *         Model of BookGenre entity
+ */
+
 @Entity
 public class BookGenre {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String genreName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String genreName;
 
-	public BookGenre() {
-	}
-	
-	public BookGenre(Integer id, String genreName) {
-		this.id = id;
-		this.genreName = genreName;
-	}
-	
-	public BookGenre(String genreName) {
-		this.genreName = genreName;
-	}
+    public BookGenre() {
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public BookGenre(Integer id, String genreName) {
+        this.id = id;
+        this.genreName = genreName;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public BookGenre(String genreName) {
+        this.genreName = genreName;
+    }
 
-	public String getGenreName() {
-		return genreName;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setGenreName(String genreName) {
-		this.genreName = genreName;
-	}
-	
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
+    public String getGenreName() {
+        return genreName;
+    }
+
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
+    }
+
+    @Override
+    public String toString() {
+        return "BookGenre{" +
+                "id=" + id +
+                ", genreName='" + genreName + '\'' +
+                '}';
+    }
 }
