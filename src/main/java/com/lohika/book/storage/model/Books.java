@@ -10,6 +10,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Books {
 	private List<Book> bookCollection;
 	
+	public Books() {
+	}
+	
+	public Books(List<Book> bookCollection) {
+		this.bookCollection = bookCollection;
+	}
+
 	@XmlElement(name="book")
 	public List<Book> getBookCollection() {
 		return bookCollection;

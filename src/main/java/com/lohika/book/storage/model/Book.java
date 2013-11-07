@@ -18,7 +18,7 @@ public class Book {
     private Double price;
     private String contentUrl;
     
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "id_genre")
     private BookGenre bookGenre;
 
