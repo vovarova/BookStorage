@@ -1,13 +1,14 @@
 package com.lohika.book.storage.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * User: vroman
  * Model of Book entity
  */
 @Entity
-@Table(name = "Book")
+@XmlRootElement
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
