@@ -17,18 +17,35 @@ public class Book {
     private String title;
     private Double price;
     private String contentUrl;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_genre")
+    private BookGenre bookGenre;
 
     public Book() {
     }
 
-    public Book(String author, String title, Double price, String contentUrl) {
-        this.author = author;
-        this.title = title;
-        this.price = price;
-        this.contentUrl = contentUrl;
-    }
+	public Book(Integer id, String author, String title, Double price,
+			String contentUrl, BookGenre bookGenre) {
+		this.id = id;
+		this.author = author;
+		this.title = title;
+		this.price = price;
+		this.contentUrl = contentUrl;
+		this.bookGenre = bookGenre;
+	}
+	
+	public Book(String author, String title, Double price,
+			String contentUrl, BookGenre bookGenre) {
+		this.author = author;
+		this.title = title;
+		this.price = price;
+		this.contentUrl = contentUrl;
+		this.bookGenre = bookGenre;
+	}
 
-    public String getContentUrl() {
+
+	public String getContentUrl() {
         return contentUrl;
     }
 
@@ -68,7 +85,15 @@ public class Book {
         this.id = id;
     }
 
-    @Override
+    public BookGenre getBookGenre() {
+		return bookGenre;
+	}
+
+	public void setBookGenre(BookGenre bookGenre) {
+		this.bookGenre = bookGenre;
+	}
+
+	@Override
     public String toString() {
         return "Book{" +
                 "author='" + author + '\'' +
