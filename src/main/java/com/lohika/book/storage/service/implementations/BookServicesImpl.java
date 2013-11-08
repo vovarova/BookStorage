@@ -1,6 +1,8 @@
 package com.lohika.book.storage.service.implementations;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
 import com.lohika.book.storage.api.BookServices;
 import com.lohika.book.storage.dao.BooksDao;
@@ -45,5 +47,16 @@ public class BookServicesImpl implements BookServices {
     public Books getAllBooks() {
         return new BooksDao().getAllBooks();
     }
+
+    @Override
+    public Response downloadBookFile(Integer bookId) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Response uploadBookFile(Integer bookId) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
 }

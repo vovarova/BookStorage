@@ -1,11 +1,8 @@
 package com.lohika.book.storage.api;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.lohika.book.storage.model.Book;
 import com.lohika.book.storage.model.Books;
@@ -64,4 +61,21 @@ public interface BookServices {
     @GET
     @Path("all")
     public Books getAllBooks();
+
+    /**
+     * Get all avaliable books
+     *
+     * @return {@link Books}
+     */
+    @GET
+    @Path("download/{bookId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadBookFile(@PathParam(value = "bookId") Integer bookId);
+
+
+    @POST
+    @Path("upload/{bookId}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response uploadBookFile(@PathParam(value = "bookId") Integer bookId);
+
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * User: vroman
+ * @author vroman
  * Model of Book entity
  */
 @Entity
@@ -16,7 +16,7 @@ public class Book {
     private String author;
     private String title;
     private Double price;
-    private String contentUrl;
+
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_genre")
@@ -25,33 +25,13 @@ public class Book {
     public Book() {
     }
 
-    public Book(Integer id, String author, String title, Double price,
-                String contentUrl, BookGenre bookGenre) {
-        this.id = id;
+    public Book(String author, String title, Double price, BookGenre bookGenre) {
         this.author = author;
         this.title = title;
         this.price = price;
-        this.contentUrl = contentUrl;
         this.bookGenre = bookGenre;
     }
 
-    public Book(String author, String title, Double price,
-                String contentUrl, BookGenre bookGenre) {
-        this.author = author;
-        this.title = title;
-        this.price = price;
-        this.contentUrl = contentUrl;
-        this.bookGenre = bookGenre;
-    }
-
-
-    public String getContentUrl() {
-        return contentUrl;
-    }
-
-    public void setContentUrl(String contentUrl) {
-        this.contentUrl = contentUrl;
-    }
 
     public String getAuthor() {
         return author;
@@ -100,7 +80,6 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
                 ", price=" + price +
-                ", contentUrl='" + contentUrl + '\'' +
                 ", bookGenre=" + bookGenre +
                 '}';
     }
