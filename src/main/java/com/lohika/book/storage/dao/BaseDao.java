@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
  *         This class is to declare main DAO functionality
  */
 
-public class BaseDao {
+public class BaseDao<T> {
     private EntityManager entityManager = null;
 
     public BaseDao() {
@@ -27,7 +27,7 @@ public class BaseDao {
      * @param clazz<T> class of object to look for
      * @return T
      */
-    public <T> T getEntity(Object id, Class<T> clazz) {
+    public T getEntity(Object id, Class<T> clazz) {
         return entityManager.find(clazz, id);
     }
 
@@ -36,7 +36,7 @@ public class BaseDao {
      *
      * @param entity object to remove
      */
-    public void removeEntity(Object entity) {
+    public void removeEntity(T entity) {
         entityManager.remove(entity);
     }
 
@@ -45,7 +45,7 @@ public class BaseDao {
      *
      * @param entity object to persist
      */
-    public void persistEntity(Object entity) {
+    public void persistEntity(T entity) {
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
         entityManager.getTransaction().commit();
@@ -56,7 +56,7 @@ public class BaseDao {
      *
      * @param entity object to merge
      */
-    public void mergeEntity(Object entity) {
+    public void mergeEntity(T entity) {
         entityManager.getTransaction().begin();
         entityManager.merge(entity);
         entityManager.getTransaction().commit();

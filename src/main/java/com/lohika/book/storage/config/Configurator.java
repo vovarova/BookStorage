@@ -1,4 +1,4 @@
-package com.lohika.book.storage.utils.config;
+package com.lohika.book.storage.config;
 
 import com.lohika.book.storage.utils.Constants;
 import org.apache.log4j.Logger;
@@ -35,7 +35,7 @@ public class Configurator {
                 }
             }
         }
-        return new Configurator();
+        return instance;
     }
 
     /**

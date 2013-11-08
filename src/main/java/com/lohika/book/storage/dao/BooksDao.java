@@ -12,7 +12,7 @@ import com.lohika.book.storage.model.Books;
  * @author: vroman
  * Declare Books Dao functionality
  */
-public class BooksDao extends BaseDao {
+public class BooksDao extends BaseDao<Book> {
     public BooksDao() {
         super();
     }
@@ -41,5 +41,6 @@ public class BooksDao extends BaseDao {
         List<Book> resultList = createQuery.getResultList();
         return new Books(resultList);
     }
+
 
 }

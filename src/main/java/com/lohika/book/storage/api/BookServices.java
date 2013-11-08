@@ -6,6 +6,10 @@ import javax.ws.rs.core.Response;
 
 import com.lohika.book.storage.model.Book;
 import com.lohika.book.storage.model.Books;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
+import java.io.InputStream;
 
 /**
  * @author vroman
@@ -72,10 +76,9 @@ public interface BookServices {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadBookFile(@PathParam(value = "bookId") Integer bookId);
 
-
     @POST
     @Path("upload/{bookId}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response uploadBookFile(@PathParam(value = "bookId") Integer bookId);
-
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadBookFile(@PathParam(value = "bookId") Integer bookId, @FormDataParam("file") InputStream uploadedInputStream,
+    @FormDataParam("file") FormDataContentDisposition fileDetail);
 }

@@ -17,7 +17,6 @@ public class Book {
     private String title;
     private Double price;
 
-
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_genre")
     private BookGenre bookGenre;

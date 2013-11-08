@@ -8,6 +8,10 @@ import com.lohika.book.storage.api.BookServices;
 import com.lohika.book.storage.dao.BooksDao;
 import com.lohika.book.storage.model.Book;
 import com.lohika.book.storage.model.Books;
+import com.lohika.book.storage.service.implementations.file.FileManager;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+
+import java.io.*;
 
 @Path("/book")
 public class BookServicesImpl implements BookServices {
@@ -50,13 +54,20 @@ public class BookServicesImpl implements BookServices {
 
     @Override
     public Response downloadBookFile(Integer bookId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        FileInputStream fileOutputStream=null;
+        try {
+            fileOutputStream=new FileInputStream(new File("D:\\vova.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return Response.ok().entity(fileOutputStream).build();
     }
 
     @Override
-    public Response uploadBookFile(Integer bookId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Response uploadBookFile(Integer bookId, InputStream uploadedInputStream, FormDataContentDisposition fileDetail) {
+        FileManager.getInstance().saveFile(uploadedInputStream,fileDetail.getFileName());
+        System.out.println("hello");
+        return Response.status(200).entity("yes").build();
     }
-
 
 }

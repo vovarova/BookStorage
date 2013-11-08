@@ -1,4 +1,4 @@
-package com.lohika.book.storage.utils.config;
+package com.lohika.book.storage.config;
 
 /**
  * @author: vroman
