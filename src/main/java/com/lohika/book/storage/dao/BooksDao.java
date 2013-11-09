@@ -42,5 +42,4 @@ public class BooksDao extends BaseDao<Book> {
         return new Books(resultList);
     }
 
-
 }

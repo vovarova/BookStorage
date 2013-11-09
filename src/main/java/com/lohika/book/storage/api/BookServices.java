@@ -73,7 +73,6 @@ public interface BookServices {
      */
     @GET
     @Path("download/{bookId}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadBookFile(@PathParam(value = "bookId") Integer bookId);
 
     @POST
