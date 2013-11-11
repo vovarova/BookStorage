@@ -66,18 +66,38 @@ public interface BookServices {
     @Path("all")
     public Books getAllBooks();
 
+
     /**
-     * Get all avaliable books
+     * Download file by book id
      *
-     * @return {@link Books}
+     * @param bookId unique book identifier
+     * @return {@link Response} appropriate book file
      */
     @GET
-    @Path("download/{bookId}")
+    @Path("file/{bookId}")
     public Response downloadBookFile(@PathParam(value = "bookId") Integer bookId);
 
+    /**
+     * Upload file to book storage
+     *
+     * @param bookId              unique book identifier
+     * @param uploadedInputStream file to upload
+     * @param fileDetail          file details
+     * @return {@link Response} result of uploading
+     */
     @POST
-    @Path("upload/{bookId}")
+    @Path("file/{bookId}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response uploadBookFile(@PathParam(value = "bookId") Integer bookId, @FormDataParam("file") InputStream uploadedInputStream,
-    @FormDataParam("file") FormDataContentDisposition fileDetail);
+                                   @FormDataParam("file") FormDataContentDisposition fileDetail);
+
+    /**
+     * Delete file for book with id = {bookId}
+     *
+     * @param bookId unique book identifier
+     * @return {@link Response} result of deleting
+     */
+    @DELETE
+    @Path("file/{bookId}")
+    public Response deleteBookFile(@PathParam(value = "bookId") Integer bookId);
 }

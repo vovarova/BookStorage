@@ -18,12 +18,12 @@ import java.io.*;
 
 @Path("/book")
 public class BookServicesImpl implements BookServices {
-private BooksDao booksDao=new BooksDao();
-private FileManager fileManager=FileManager.getInstance();
-@Override
+    private BooksDao booksDao = new BooksDao();
+    private FileManager fileManager = FileManager.getInstance();
+
+    @Override
     public Book getBookById(Integer id) {
-        Book book = booksDao.getBookById(id);
-        return book;
+        return booksDao.getBookById(id);
     }
 
     @Override
@@ -32,9 +32,9 @@ private FileManager fileManager=FileManager.getInstance();
         if (book != null) {
             booksDao.removeEntity(book);
             String fileLocation = book.getFileLocation();
-            if(fileLocation!=null){
-				fileManager.deleteFile(fileLocation);
-			}
+            if (fileLocation != null) {
+                fileManager.deleteFullFilePath(fileLocation);
+            }
         }
     }
 
@@ -58,34 +58,44 @@ private FileManager fileManager=FileManager.getInstance();
 
     @Override
     public Response downloadBookFile(Integer bookId) {
-    	Book book = booksDao.getBookById(bookId);
-    	if(book==null || book.getFileLocation()==null){  		
-    		throw new BadRequestException("Cant find file for book with id "+bookId);    		
-    	}else{    		
-    		File file = fileManager.getFile(book.getFileLocation());    		
-    		ResponseBuilder responseBuilder = Response.ok();
-    		responseBuilder.type(new MimetypesFileTypeMap().getContentType(file));
-    		responseBuilder.header("content-disposition","attachment; filename = "+file.getName());
-    		responseBuilder.entity(file);
-    		return responseBuilder.build();
-    	}
+        Book book = booksDao.getBookById(bookId);
+        if (book == null || book.getFileLocation() == null) {
+            throw new BadRequestException("Cant find file for book with id " + bookId);
+        } else {
+            File file = fileManager.getFile(book.getFileLocation());
+            ResponseBuilder responseBuilder = Response.ok();
+            responseBuilder.type(new MimetypesFileTypeMap().getContentType(file));
+            responseBuilder.header("content-disposition", "attachment; filename = " + file.getName());
+            responseBuilder.entity(file);
+            return responseBuilder.build();
+        }
     }
 
     @Override
     public Response uploadBookFile(Integer bookId, InputStream uploadedInputStream, FormDataContentDisposition fileDetail) {
         Book book = booksDao.getBookById(bookId);
-        if(book==null){
-        	throw new BadRequestException("Cant find book with id "+bookId);
-        }else{
-        	String fileLocation = book.getFileLocation();
-			if(fileLocation!=null && !fileLocation.isEmpty()){
-				fileManager.deleteFile(fileLocation);
-			}
-			String fileName = fileDetail.getFileName();
-			book.setFileLocation(fileName);
-			booksDao.mergeEntity(book);
-			fileManager.saveFile(uploadedInputStream,fileName);
-			return Response.status(200).entity("File was successfully saved").build();
+        if (book == null) {
+            throw new BadRequestException("Cant find book with id " + bookId);
+        } else {
+            String fileLocation = book.getFileLocation();
+            if (fileLocation != null && !fileLocation.isEmpty()) {
+                fileManager.deleteFile(fileLocation);
+            }
+            String fileName = fileDetail.getFileName();
+            String newFileLocation = bookId + FileManager.fileSeparator + fileName;
+            book.setFileLocation(newFileLocation);
+            booksDao.mergeEntity(book);
+            fileManager.saveFile(uploadedInputStream, newFileLocation);
+            return Response.status(200).entity("File was successfully saved").build();
         }
+    }
+
+    @Override
+    public Response deleteBookFile(Integer bookId) {
+        Book book = booksDao.getBookById(bookId);
+        fileManager.deleteFullFilePath(book.getFileLocation());
+        book.setFileLocation(null);
+        booksDao.mergeEntity(book);
+        return Response.status(200).entity("File was successfully deleted").build();
     }
 }
