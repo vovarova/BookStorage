@@ -47,9 +47,6 @@ public class FileServicesImpl implements FileServices {
         boolean deleted = false;
         if (filePath != null) {
             deleted = fileManager.deleteFile(FILE_STORAGE, filePath);
-        } else {
-            throw new NullPointerException("Book " + book
-                    + "has invalid file path");
         }
         return deleted;
     }
