@@ -27,6 +27,7 @@ public class EMF implements ServletContextListener {
 
     /**
      * Create entity manager
+     *
      * @return {@link EntityManager}
      */
     public static EntityManager createEntityManager() {

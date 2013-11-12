@@ -32,8 +32,8 @@ public class BookServicesImpl implements BookServices {
         if (book != null) {
             booksDao.removeEntity(book);
             fileServices.deleteFullFilePath(book);
-        }else{
-        	throw new BadRequestException("Cant find file for book with id " + id);
+        } else {
+            throw new BadRequestException("Cant find file for book with id " + id);
         }
     }
 
@@ -88,29 +88,29 @@ public class BookServicesImpl implements BookServices {
     @Override
     public Response deleteBookFile(Integer bookId) {
         Book book = booksDao.getBookById(bookId);
-        if(book!=null && book.getFileName()!=null){
-        	throw new BadRequestException("Cant find book with id " + bookId);
-        }else{        	
-        	fileServices.deleteFullFilePath(book);
-        	book.setFileName(null);
-        	booksDao.mergeEntity(book);
-        	return Response.status(200).entity("File was successfully deleted").build();
+        if (book != null && book.getFileName() != null) {
+            throw new BadRequestException("Cant find book with id " + bookId);
+        } else {
+            fileServices.deleteFullFilePath(book);
+            book.setFileName(null);
+            booksDao.mergeEntity(book);
+            return Response.status(200).entity("File was successfully deleted").build();
         }
     }
 
-	public BooksDao getBooksDao() {
-		return booksDao;
-	}
+    public BooksDao getBooksDao() {
+        return booksDao;
+    }
 
-	public void setBooksDao(BooksDao booksDao) {
-		this.booksDao = booksDao;
-	}
+    public void setBooksDao(BooksDao booksDao) {
+        this.booksDao = booksDao;
+    }
 
-	public FileServices getFileServices() {
-		return fileServices;
-	}
+    public FileServices getFileServices() {
+        return fileServices;
+    }
 
-	public void setFileServices(FileServices fileServices) {
-		this.fileServices = fileServices;
-	}
+    public void setFileServices(FileServices fileServices) {
+        this.fileServices = fileServices;
+    }
 }

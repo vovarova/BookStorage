@@ -12,7 +12,7 @@ import java.util.Properties;
  * This is Configurator that loads properties from file
  */
 public class Configurator {
-    private static final Logger LOGGER= Logger.getLogger(Configurator.class);
+    private static final Logger LOGGER = Logger.getLogger(Configurator.class);
     private static Configurator instance = null;
     private final Properties properties = new Properties();
 

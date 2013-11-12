@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  * @author: vroman
- * To change this template use File | Settings | File Templates.
+ * Application configs to use MultiPartFeatures
  */
 public class ApplicationConfig extends Application {
     @Override

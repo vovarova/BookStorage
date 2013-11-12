@@ -25,8 +25,8 @@ public class FileManagerImpl implements FileManager {
     }
 
     @Override
-	public void saveFile(InputStream uploadedInputStream,String fileStorageLocation, String filePath) {
-        String[] split =  splitFilePath(filePath);
+    public void saveFile(InputStream uploadedInputStream, String fileStorageLocation, String filePath) {
+        String[] split = splitFilePath(filePath);
         if (split.length > 1) {
             File directory = new File(concatLocation(fileStorageLocation, split[split.length - 2]));
             try {
@@ -41,13 +41,13 @@ public class FileManagerImpl implements FileManager {
 
 
     @Override
-	public File getFile(String fileStorageLocation,String filePath) {
+    public File getFile(String fileStorageLocation, String filePath) {
         String fileLocation = concatLocation(fileStorageLocation, filePath);
         return new File(fileLocation);
     }
 
     @Override
-	public boolean deleteFile(String fileStorageLocation,String filePath) {
+    public boolean deleteFile(String fileStorageLocation, String filePath) {
         boolean deleted = true;
         String fileLocation = concatLocation(fileStorageLocation, filePath);
         try {
@@ -60,9 +60,8 @@ public class FileManagerImpl implements FileManager {
     }
 
 
-
     @Override
-	public boolean deleteFullFilePath(String fileStorageLocation,String filePath) {
+    public boolean deleteFullFilePath(String fileStorageLocation, String filePath) {
         boolean deleted = true;
         String fileLocation = concatLocation(fileStorageLocation, filePath);
         String[] split = splitFilePath(filePath);
@@ -85,7 +84,7 @@ public class FileManagerImpl implements FileManager {
         return deleted;
     }
 
-   @Override
+    @Override
     public String concatLocation(String baseLocation, String... chunks) {
         StringBuilder builder = new StringBuilder(baseLocation);
         if (chunks != null) {
@@ -108,7 +107,7 @@ public class FileManagerImpl implements FileManager {
 
     private void writeToFile(InputStream uploadedInputStream,
                              String uploadedFileLocation) {
-        OutputStream outputStream ;
+        OutputStream outputStream;
         try {
             outputStream = new FileOutputStream(new File(
                     uploadedFileLocation));
