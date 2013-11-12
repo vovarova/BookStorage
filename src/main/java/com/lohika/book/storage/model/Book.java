@@ -2,7 +2,6 @@ package com.lohika.book.storage.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author vroman
@@ -17,9 +16,7 @@ public class Book {
     private String author;
     private String title;
     private Double price;
-    
-    @XmlTransient
-    private String fileLocation;
+    private String fileName;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_genre")
@@ -77,12 +74,12 @@ public class Book {
         this.bookGenre = bookGenre;
     }
 
-    public final String getFileLocation() {
-        return fileLocation;
+    public final String getFileName() {
+        return fileName;
     }
     
-    public final void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
+    public final void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     @Override

@@ -7,10 +7,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.lohika.book.storage.api.BookServices;
+import com.lohika.book.storage.api.FileServices;
 import com.lohika.book.storage.dao.BooksDao;
 import com.lohika.book.storage.model.Book;
 import com.lohika.book.storage.model.Books;
-import com.lohika.book.storage.service.implementations.file.FileManager;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
@@ -19,7 +19,7 @@ import java.io.*;
 @Path("/book")
 public class BookServicesImpl implements BookServices {
     private BooksDao booksDao = new BooksDao();
-    private FileManager fileManager = FileManager.getInstance();
+    private FileServices fileServices = new FileServicesImpl();
 
     @Override
     public Book getBookById(Integer id) {
@@ -31,10 +31,9 @@ public class BookServicesImpl implements BookServices {
         Book book = booksDao.getBookById(id);
         if (book != null) {
             booksDao.removeEntity(book);
-            String fileLocation = book.getFileLocation();
-            if (fileLocation != null) {
-                fileManager.deleteFullFilePath(fileLocation);
-            }
+            fileServices.deleteFullFilePath(book);
+        }else{
+        	throw new BadRequestException("Cant find file for book with id " + id);
         }
     }
 
@@ -59,10 +58,10 @@ public class BookServicesImpl implements BookServices {
     @Override
     public Response downloadBookFile(Integer bookId) {
         Book book = booksDao.getBookById(bookId);
-        if (book == null || book.getFileLocation() == null) {
+        if (book == null || book.getFileName() == null) {
             throw new BadRequestException("Cant find file for book with id " + bookId);
         } else {
-            File file = fileManager.getFile(book.getFileLocation());
+            File file = fileServices.getFile(book);
             ResponseBuilder responseBuilder = Response.ok();
             responseBuilder.type(new MimetypesFileTypeMap().getContentType(file));
             responseBuilder.header("content-disposition", "attachment; filename = " + file.getName());
@@ -77,15 +76,11 @@ public class BookServicesImpl implements BookServices {
         if (book == null) {
             throw new BadRequestException("Cant find book with id " + bookId);
         } else {
-            String fileLocation = book.getFileLocation();
-            if (fileLocation != null && !fileLocation.isEmpty()) {
-                fileManager.deleteFile(fileLocation);
-            }
+            fileServices.deleteFile(book);
             String fileName = fileDetail.getFileName();
-            String newFileLocation = bookId + FileManager.fileSeparator + fileName;
-            book.setFileLocation(newFileLocation);
+            book.setFileName(fileName);
             booksDao.mergeEntity(book);
-            fileManager.saveFile(uploadedInputStream, newFileLocation);
+            fileServices.saveFile(uploadedInputStream, fileName, book);
             return Response.status(200).entity("File was successfully saved").build();
         }
     }
@@ -93,9 +88,29 @@ public class BookServicesImpl implements BookServices {
     @Override
     public Response deleteBookFile(Integer bookId) {
         Book book = booksDao.getBookById(bookId);
-        fileManager.deleteFullFilePath(book.getFileLocation());
-        book.setFileLocation(null);
-        booksDao.mergeEntity(book);
-        return Response.status(200).entity("File was successfully deleted").build();
+        if(book!=null && book.getFileName()!=null){
+        	throw new BadRequestException("Cant find book with id " + bookId);
+        }else{        	
+        	fileServices.deleteFullFilePath(book);
+        	book.setFileName(null);
+        	booksDao.mergeEntity(book);
+        	return Response.status(200).entity("File was successfully deleted").build();
+        }
     }
+
+	public BooksDao getBooksDao() {
+		return booksDao;
+	}
+
+	public void setBooksDao(BooksDao booksDao) {
+		this.booksDao = booksDao;
+	}
+
+	public FileServices getFileServices() {
+		return fileServices;
+	}
+
+	public void setFileServices(FileServices fileServices) {
+		this.fileServices = fileServices;
+	}
 }

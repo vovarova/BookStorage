@@ -45,6 +45,7 @@ public interface BookServices {
      */
     @PUT
     @Path("/")
+    @Consumes(MediaType.APPLICATION_XML)
     public Book createBook(Book book);
 
     /**

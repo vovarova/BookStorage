@@ -37,7 +37,9 @@ public class BaseDao<T> {
      * @param entity object to remove
      */
     public void removeEntity(T entity) {
-        entityManager.remove(entity);
+    	  entityManager.getTransaction().begin();
+    	  entityManager.remove(entity);
+    	  entityManager.getTransaction().commit();
     }
 
     /**
