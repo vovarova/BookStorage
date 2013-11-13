@@ -1,8 +1,9 @@
 package com.lohika.book.storage.utils;
 
 /**
+ * This class is to store constants.
+ * 
  * @author: vroman
- * This class is to store constants
  */
 public class Constants {
     private Constants() {
