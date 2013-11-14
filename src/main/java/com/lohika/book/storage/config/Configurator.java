@@ -1,7 +1,8 @@
 package com.lohika.book.storage.config;
 
-import com.lohika.book.storage.utils.Constants;
 import org.apache.log4j.Logger;
+
+import com.lohika.book.storage.utils.Constants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,7 @@ import java.util.Properties;
 public final class Configurator {
 
     private static final Logger LOGGER = Logger.getLogger(Configurator.class);
-    private static Configurator instance;
+    private static Configurator instance = new Configurator();
     private final Properties properties = new Properties();
 
     private Configurator() {
@@ -35,13 +36,6 @@ public final class Configurator {
      * @return {@link Configurator}
      */
     public static Configurator getInstance() {
-        if (instance == null) {
-            synchronized (Configurator.class) {
-                if (instance == null) {
-                    instance = new Configurator();
-                }
-            }
-        }
         return instance;
     }
 
