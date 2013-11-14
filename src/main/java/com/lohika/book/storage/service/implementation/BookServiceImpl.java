@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -13,7 +14,9 @@ import com.lohika.book.storage.service.FileService;
 import com.lohika.book.storage.dao.BookDao;
 import com.lohika.book.storage.dao.domain.Book;
 import com.lohika.book.storage.model.Books;
+
 import java.io.InputStream;
+
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 /**
@@ -38,8 +41,7 @@ public class BookServiceImpl implements BookService {
             booksDao.removeEntity(book);
             fileService.deleteFile(book);
         } else {
-            throw new BadRequestException("Cant find file for book with id "
-                    + id);
+            throw new NotFoundException("Cant find file for book with id " + id);
         }
     }
 
@@ -65,7 +67,7 @@ public class BookServiceImpl implements BookService {
     public final Response downloadFile(final Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
-            throw new BadRequestException("Cant find file for book with id "
+            throw new NotFoundException("Cant find file for book with id "
                     + bookId);
         } else {
             final File file = fileService.getFile(book);
@@ -85,7 +87,7 @@ public class BookServiceImpl implements BookService {
             final FormDataContentDisposition fileDetail) {
         final Book book = booksDao.getById(bookId);
         if (book == null) {
-            throw new BadRequestException("Cant find book with id " + bookId);
+            throw new NotFoundException("Cant find book with id " + bookId);
         } else {
             fileService.deleteFile(book);
             final String fileName = fileDetail.getFileName();
