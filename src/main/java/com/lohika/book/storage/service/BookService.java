@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -51,9 +52,10 @@ public interface BookService {
      * @param book object to create
      * @return {@link Book}
      */
-    @PUT
+    @POST
     @Path("/")
-    @Consumes(MediaType.APPLICATION_XML)
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     Book create(Book book);
 
     /**
@@ -62,8 +64,10 @@ public interface BookService {
      * @param book object to update
      * @return {@link Book}
      */
-    @POST
+    @PUT
     @Path("/")
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     Book update(Book book);
 
     /**
@@ -73,6 +77,7 @@ public interface BookService {
      */
     @GET
     @Path("all")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     Books getAll();
 
     /**
