@@ -3,7 +3,7 @@ package com.lohika.book.storage.service;
 import java.io.File;
 import java.io.InputStream;
 
-import com.lohika.book.storage.domain.Book;
+import com.lohika.book.storage.dao.domain.Book;
 
 /**
  * FileService API defines main file functionality.
@@ -19,7 +19,6 @@ public interface FileService {
      * @param fileName fileName to store
      * @param book book entity to link file to
      */
-
     void saveFile(InputStream uploadedInputStream, String fileName, Book book);
 
     /**
@@ -28,7 +27,6 @@ public interface FileService {
      * @param book Book entity
      * @return {@link File}
      */
-
     File getFile(Book book);
 
     /**

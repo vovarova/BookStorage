@@ -12,32 +12,37 @@ import java.util.Properties;
  * 
  * @author: vroman
  */
-public class Configurator {
+public final class Configurator {
 
     private static final Logger LOGGER = Logger.getLogger(Configurator.class);
-    private static Configurator instance = null;
+    private static Configurator instance;
     private final Properties properties = new Properties();
 
     private Configurator() {
-	InputStream resourceAsStream = getClass().getClassLoader()
-		.getResourceAsStream(Constants.CONFIGURATION_FILE);
-	try {
-	    LOGGER.info("Load configurations");
-	    properties.load(resourceAsStream);
-	} catch (IOException e) {
-	    LOGGER.error(e);
-	}
+        InputStream resourceAsStream = getClass().getClassLoader()
+                .getResourceAsStream(Constants.CONFIGURATION_FILE);
+        try {
+            LOGGER.info("Load configurations");
+            properties.load(resourceAsStream);
+        } catch (IOException e) {
+            LOGGER.error(e);
+        }
     }
 
+    /**
+     * Get instance of Configurator
+     * 
+     * @return {@link Configurator}
+     */
     public static Configurator getInstance() {
-	if (instance == null) {
-	    synchronized (Configurator.class) {
-		if (instance == null) {
-		    instance = new Configurator();
-		}
-	    }
-	}
-	return instance;
+        if (instance == null) {
+            synchronized (Configurator.class) {
+                if (instance == null) {
+                    instance = new Configurator();
+                }
+            }
+        }
+        return instance;
     }
 
     /**
@@ -46,8 +51,8 @@ public class Configurator {
      * @param configurationKey unique identifier of property
      * @return property value
      */
-    public String getProperty(ConfigurationKey configurationKey) {
-	return (String) properties.get(configurationKey.getKey());
+    public String getProperty(final ConfigurationKey configurationKey) {
+        return (String) properties.get(configurationKey.getKey());
     }
 
 }

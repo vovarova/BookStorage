@@ -1,5 +1,7 @@
 package com.lohika.book.storage.service.implementation;
 
+import java.io.File;
+
 import javax.activation.MimetypesFileTypeMap;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Path;
@@ -8,117 +10,120 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.lohika.book.storage.service.BookService;
 import com.lohika.book.storage.service.FileService;
-import com.lohika.book.storage.dao.BooksDao;
-import com.lohika.book.storage.domain.Book;
+import com.lohika.book.storage.dao.BookDao;
+import com.lohika.book.storage.dao.domain.Book;
 import com.lohika.book.storage.model.Books;
-
+import java.io.InputStream;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
-import java.io.*;
-
+/**
+ * Book Service implementation with root path /book all jax-rs annotations will
+ * be inherited
+ */
 @Path("/book")
 public class BookServiceImpl implements BookService {
-    private BooksDao booksDao = new BooksDao();
 
+    private BookDao booksDao = new BookDao();
     private FileService fileService = new FileServiceImpl();
 
     @Override
-    public Book getById(Integer id) {
-	return booksDao.getById(id);
+    public final Book getById(final Integer id) {
+        return booksDao.getById(id);
     }
 
     @Override
-    public void deleteById(Integer id) {
-	Book book = booksDao.getById(id);
-	if (book != null) {
-	    booksDao.removeEntity(book);
-	    fileService.deleteFile(book);
-	} else {
-	    throw new BadRequestException("Cant find file for book with id "
-		    + id);
-	}
+    public final void deleteById(final Integer id) {
+        final Book book = booksDao.getById(id);
+        if (book != null) {
+            booksDao.removeEntity(book);
+            fileService.deleteFile(book);
+        } else {
+            throw new BadRequestException("Cant find file for book with id "
+                    + id);
+        }
     }
 
     @Override
-    public Book create(Book book) {
-	booksDao.persistEntity(book);
-	return book;
+    public final Book create(final Book book) {
+        booksDao.persistEntity(book);
+        return book;
     }
 
     @Override
-    public Book update(Book book) {
-	booksDao.mergeEntity(book);
-	return book;
+    public final Book update(final Book book) {
+        booksDao.mergeEntity(book);
+        return book;
 
     }
 
     @Override
-    public Books getAll() {
-	return new BooksDao().getAll();
+    public final Books getAll() {
+        return new BookDao().getAll();
     }
 
     @Override
-    public Response downloadFile(Integer bookId) {
-	Book book = booksDao.getById(bookId);
-	if (book == null || book.getFileName() == null) {
-	    throw new BadRequestException("Cant find file for book with id "
-		    + bookId);
-	} else {
-	    File file = fileService.getFile(book);
-	    ResponseBuilder responseBuilder = Response.ok();
-	    responseBuilder.type(new MimetypesFileTypeMap()
-		    .getContentType(file));
-	    responseBuilder.header("content-disposition",
-		    "attachment; filename = " + book.getFileName());
-	    responseBuilder.entity(file);
-	    return responseBuilder.build();
-	}
+    public final Response downloadFile(final Integer bookId) {
+        final Book book = booksDao.getById(bookId);
+        if (book == null || book.getFileName() == null) {
+            throw new BadRequestException("Cant find file for book with id "
+                    + bookId);
+        } else {
+            final File file = fileService.getFile(book);
+            final ResponseBuilder responseBuilder = Response.ok();
+            responseBuilder.type(new MimetypesFileTypeMap()
+                    .getContentType(file));
+            responseBuilder.header("content-disposition",
+                    "attachment; filename = " + book.getFileName());
+            responseBuilder.entity(file);
+            return responseBuilder.build();
+        }
     }
 
     @Override
-    public Response uploadFile(Integer bookId, InputStream uploadedInputStream,
-	    FormDataContentDisposition fileDetail) {
-	Book book = booksDao.getById(bookId);
-	if (book == null) {
-	    throw new BadRequestException("Cant find book with id " + bookId);
-	} else {
-	    fileService.deleteFile(book);
-	    String fileName = fileDetail.getFileName();
-	    book.setFileName(fileName);
-	    booksDao.mergeEntity(book);
-	    fileService.saveFile(uploadedInputStream, fileName, book);
-	    return Response.status(200).entity("File was successfully saved")
-		    .build();
-	}
+    public final Response uploadFile(final Integer bookId,
+            final InputStream uploadedInputStream,
+            final FormDataContentDisposition fileDetail) {
+        final Book book = booksDao.getById(bookId);
+        if (book == null) {
+            throw new BadRequestException("Cant find book with id " + bookId);
+        } else {
+            fileService.deleteFile(book);
+            final String fileName = fileDetail.getFileName();
+            book.setFileName(fileName);
+            booksDao.mergeEntity(book);
+            fileService.saveFile(uploadedInputStream, fileName, book);
+            return Response.status(200).entity("File was successfully saved")
+                    .build();
+        }
     }
 
     @Override
-    public Response deleteFile(Integer bookId) {
-	Book book = booksDao.getById(bookId);
-	if (book != null && book.getFileName() != null) {
-	    throw new BadRequestException("Cant find book with id " + bookId);
-	} else {
-	    fileService.deleteFile(book);
-	    book.setFileName(null);
-	    booksDao.mergeEntity(book);
-	    return Response.status(200).entity("File was successfully deleted")
-		    .build();
-	}
+    public final Response deleteFile(final Integer bookId) {
+        final Book book = booksDao.getById(bookId);
+        if (book != null && book.getFileName() != null) {
+            throw new BadRequestException("Cant find book with id " + bookId);
+        } else {
+            fileService.deleteFile(book);
+            book.setFileName(null);
+            booksDao.mergeEntity(book);
+            return Response.status(200).entity("File was successfully deleted")
+                    .build();
+        }
     }
 
-    public BooksDao getBooksDao() {
-	return booksDao;
+    public final BookDao getBooksDao() {
+        return booksDao;
     }
 
-    public void setBooksDao(BooksDao booksDao) {
-	this.booksDao = booksDao;
+    public final void setBooksDao(final BookDao booksDao) {
+        this.booksDao = booksDao;
     }
 
-    public FileService getFileService() {
-	return fileService;
+    public final FileService getFileService() {
+        return fileService;
     }
 
-    public void setFileService(FileService fileService) {
-	this.fileService = fileService;
+    public final void setFileService(final FileService fileService) {
+        this.fileService = fileService;
     }
 }

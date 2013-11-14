@@ -3,6 +3,11 @@ package com.lohika.book.storage.service;
 import java.io.File;
 import java.io.InputStream;
 
+/**
+ * Manager that contains main operations with files.
+ * 
+ * @author vroman
+ */
 public interface FileManager {
 
     /**
@@ -14,7 +19,7 @@ public interface FileManager {
      */
 
     void saveFile(InputStream uploadedInputStream, String fileStorageLocation,
-	    String fileName);
+            String fileName);
 
     /**
      * Get file by its name
@@ -23,7 +28,6 @@ public interface FileManager {
      * @param fileName fileName in fileStorage
      * @return {@link File}
      */
-
     File getFile(String fileStorageLocation, String fileName);
 
     /**

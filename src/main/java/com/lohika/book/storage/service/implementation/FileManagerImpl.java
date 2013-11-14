@@ -20,62 +20,72 @@ import com.lohika.book.storage.service.FileManager;
 public class FileManagerImpl implements FileManager {
 
     private static final Logger LOGGER = Logger
-	    .getLogger(FileManagerImpl.class);
+            .getLogger(FileManagerImpl.class);
 
-    public static final String fileSeparator = System
-	    .getProperty("file.separator");
+    /** File path separator depends what OS we use i.e Windows: '/' */
+    public static final String FILE_SEPARATOR = System
+            .getProperty("file.separator");
 
+    /**
+     * Create {@link FileManagerImpl} instance
+     */
     public FileManagerImpl() {
     }
 
     @Override
-    public void saveFile(InputStream uploadedInputStream,
-	    String fileStorageLocation, String fileName) {
-	String fileLocation = concatLocation(fileStorageLocation, fileName);
-	writeToFile(uploadedInputStream, fileLocation);
+    public final void saveFile(final InputStream uploadedInputStream,
+            final String fileStorageLocation, final String fileName) {
+        final String fileLocation = concatLocation(fileStorageLocation,
+                fileName);
+        writeToFile(uploadedInputStream, fileLocation);
     }
 
     @Override
-    public File getFile(String fileStorageLocation, String fileName) {
-	String fileLocation = concatLocation(fileStorageLocation, fileName);
-	return new File(fileLocation);
+    public final File getFile(final String fileStorageLocation,
+            final String fileName) {
+        final String fileLocation = concatLocation(fileStorageLocation,
+                fileName);
+        return new File(fileLocation);
     }
 
     @Override
-    public boolean deleteFile(String fileStorageLocation, String fileName) {
-	boolean deleted = true;
-	String fileLocation = concatLocation(fileStorageLocation, fileName);
-	try {
-	    FileUtils.forceDelete(new File(fileLocation));
-	} catch (IOException e) {
-	    deleted = false;
-	    LOGGER.error(e);
-	}
-	return deleted;
+    public final boolean deleteFile(final String fileStorageLocation,
+            final String fileName) {
+        boolean deleted = true;
+        final String fileLocation = concatLocation(fileStorageLocation,
+                fileName);
+        try {
+            FileUtils.forceDelete(new File(fileLocation));
+        } catch (final IOException e) {
+            deleted = false;
+            LOGGER.error(e);
+        }
+        return deleted;
     }
 
     @Override
-    public String concatLocation(String baseLocation, String... chunks) {
-	StringBuilder builder = new StringBuilder(baseLocation);
-	if (chunks != null) {
-	    for (String chunk : chunks) {
-		builder.append(fileSeparator).append(chunk);
-	    }
-	}
-	return builder.toString();
+    public final String concatLocation(final String baseLocation,
+            final String... chunks) {
+        final StringBuilder builder = new StringBuilder(baseLocation);
+        if (chunks != null) {
+            for (final String chunk : chunks) {
+                builder.append(FILE_SEPARATOR).append(chunk);
+            }
+        }
+        return builder.toString();
     }
 
-    private void writeToFile(InputStream uploadedInputStream,
-	    String uploadedFileLocation) {
-	OutputStream outputStream;
-	try {
-	    outputStream = new FileOutputStream(new File(uploadedFileLocation));
-	    IOUtils.copy(uploadedInputStream, outputStream);
-	    outputStream.flush();
-	    outputStream.close();
-	} catch (IOException e) {
-	    LOGGER.error(e);
-	}
+    private void writeToFile(final InputStream uploadedInputStream,
+            final String uploadedFileLocation) {
+        OutputStream outputStream;
+        try {
+            outputStream = new FileOutputStream(new File(uploadedFileLocation));
+            IOUtils.copy(uploadedInputStream, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (final IOException e) {
+            LOGGER.error(e);
+        }
     }
 
 }

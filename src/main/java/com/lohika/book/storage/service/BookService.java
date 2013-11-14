@@ -1,18 +1,25 @@
 package com.lohika.book.storage.service;
 
-import javax.ws.rs.*;
+import java.io.InputStream;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.lohika.book.storage.domain.Book;
-import com.lohika.book.storage.model.Books;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
-import java.io.InputStream;
+import com.lohika.book.storage.dao.domain.Book;
+import com.lohika.book.storage.model.Books;
 
 /**
- * BookService API is to perform main actions with books entites
+ * BookService API is to perform main actions with books entites.
  * 
  * @author vroman
  */
@@ -90,8 +97,8 @@ public interface BookService {
     @Path("file/{bookId}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     Response uploadFile(@PathParam(value = "bookId") Integer bookId,
-	    @FormDataParam("file") InputStream uploadedInputStream,
-	    @FormDataParam("file") FormDataContentDisposition fileDetail);
+            @FormDataParam("file") InputStream uploadedInputStream,
+            @FormDataParam("file") FormDataContentDisposition fileDetail);
 
     /**
      * Delete file for book with id = {bookId}.

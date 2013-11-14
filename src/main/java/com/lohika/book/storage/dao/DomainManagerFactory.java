@@ -11,19 +11,19 @@ import javax.servlet.ServletContextListener;
  * 
  * @author vroman
  */
-public class DomainManagerFactory implements ServletContextListener {
-    private static final String PERSISTENCE_UNIT = "persistenceUnit";
+public final class DomainManagerFactory implements ServletContextListener {
 
+    private static final String PERSISTENCE_UNIT = "persistenceUnit";
     private static EntityManagerFactory emf;
 
     @Override
-    public void contextInitialized(ServletContextEvent event) {
-	emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+    public void contextInitialized(final ServletContextEvent event) {
+        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent event) {
-	emf.close();
+    public void contextDestroyed(final ServletContextEvent event) {
+        emf.close();
     }
 
     /**
@@ -32,10 +32,10 @@ public class DomainManagerFactory implements ServletContextListener {
      * @return {@link EntityManager}
      */
     public static EntityManager createEntityManager() {
-	if (emf == null) {
-	    throw new IllegalStateException("Context is not initialized yet.");
-	}
-	return emf.createEntityManager();
+        if (emf == null) {
+            throw new IllegalStateException("Context is not initialized yet.");
+        }
+        return emf.createEntityManager();
     }
 
 }

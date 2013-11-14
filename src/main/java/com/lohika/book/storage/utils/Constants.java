@@ -5,9 +5,10 @@ package com.lohika.book.storage.utils;
  * 
  * @author: vroman
  */
-public class Constants {
+public final class Constants {
     private Constants() {
     }
 
+    /** Configuration file name */
     public static final String CONFIGURATION_FILE = "project.properties";
 }
