@@ -1,8 +1,6 @@
 package com.lohika.book.storage.dao;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class BookDaoTest {
         Book book = new Book();
         bookDao.persistEntity(book);
         Book persistedBook = bookDao.getById(book.getId());
-        assertSame(book.getId(), persistedBook.getId());
+        assertEquals(book.getId(), persistedBook.getId());
         bookDao.removeEntity(book);
     }
 
@@ -41,7 +39,7 @@ public class BookDaoTest {
         }
         all = bookDao.getAll();
         assertFalse(all.isEmpty());
-        assertSame(numberBooks, all.size());
+        assertEquals(numberBooks, all.size());
     }
 
 }

@@ -56,10 +56,10 @@ public class BaseDaoTest {
         Book persistedEntity = baseDao.getEntity(entity.getId(), Book.class);
         assertNotNull(persistedEntity);
         entity.setAuthor("New Athor");
-        assertNotSame(persistedEntity.getAuthor(), entity.getAuthor());
+        assertFalse(entity.getAuthor().equals(persistedEntity.getAuthor()));
         baseDao.mergeEntity(entity);
         persistedEntity = baseDao.getEntity(entity.getId(), Book.class);
-        assertSame(persistedEntity.getAuthor(), entity.getAuthor());
+        assertEquals(persistedEntity.getAuthor(), entity.getAuthor());
         baseDao.removeEntity(persistedEntity);
     }
 
