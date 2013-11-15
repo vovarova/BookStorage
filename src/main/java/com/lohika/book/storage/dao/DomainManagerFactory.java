@@ -6,24 +6,25 @@ import javax.persistence.Persistence;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.lohika.book.storage.utils.Constants;
+
 /**
  * This is custom entityManagerFactory factory.
  * 
  * @author vroman
  */
 public final class DomainManagerFactory implements ServletContextListener {
-
-    private static final String PERSISTENCE_UNIT = "persistenceUnit";
-    private static EntityManagerFactory emf;
+    private static EntityManagerFactory entityManagerFactory;
 
     @Override
     public void contextInitialized(final ServletContextEvent event) {
-        emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        entityManagerFactory = Persistence
+                .createEntityManagerFactory(Constants.PERSISTENCE_UNIT);
     }
 
     @Override
     public void contextDestroyed(final ServletContextEvent event) {
-        emf.close();
+        entityManagerFactory.close();
     }
 
     /**
@@ -32,10 +33,15 @@ public final class DomainManagerFactory implements ServletContextListener {
      * @return {@link EntityManager}
      */
     public static EntityManager createEntityManager() {
-        if (emf == null) {
+        if (entityManagerFactory == null) {
             throw new IllegalStateException("Context is not initialized yet.");
         }
-        return emf.createEntityManager();
+        return entityManagerFactory.createEntityManager();
+    }
+
+    public static void setEntityManagerFactory(
+            final EntityManagerFactory entityManagerFactory) {
+        DomainManagerFactory.entityManagerFactory = entityManagerFactory;
     }
 
 }

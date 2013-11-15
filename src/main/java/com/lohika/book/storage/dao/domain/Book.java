@@ -49,11 +49,27 @@ public final class Book {
      * @param price price of book
      * @param bookGenre {@link BookGenre}
      */
-    public Book(final String author, final String title, final Double price, final BookGenre bookGenre) {
+    public Book(final String author, final String title, final Double price,
+            final BookGenre bookGenre) {
         this.author = author;
         this.title = title;
         this.price = price;
         this.bookGenre = bookGenre;
+    }
+
+    /**
+     * Clone {@link Book} instance
+     * 
+     * @param book entity to clone
+     */
+    public Book(final Book book) {
+        this.id = book.id;
+        this.author = book.author;
+        this.title = book.title;
+        this.price = book.price;
+        if (book.getBookGenre() != null) {
+            this.bookGenre = new BookGenre(book.getBookGenre());
+        }
     }
 
     public String getAuthor() {

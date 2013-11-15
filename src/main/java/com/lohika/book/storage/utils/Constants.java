@@ -11,4 +11,7 @@ public final class Constants {
 
     /** Configuration file name */
     public static final String CONFIGURATION_FILE = "project.properties";
+    
+    /** Persistence unit name */
+    public static final String PERSISTENCE_UNIT = "persistenceUnit";
 }

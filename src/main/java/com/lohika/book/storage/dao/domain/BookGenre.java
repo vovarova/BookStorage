@@ -50,6 +50,16 @@ public final class BookGenre {
         this.name = name;
     }
 
+    /**
+     * Clone {@link Book} instance
+     * 
+     * @param bookGenre entity to clone
+     */
+    public BookGenre(final BookGenre bookGenre) {
+        this.id = bookGenre.id;
+        this.name = bookGenre.name;
+    }
+
     public Integer getId() {
         return id;
     }

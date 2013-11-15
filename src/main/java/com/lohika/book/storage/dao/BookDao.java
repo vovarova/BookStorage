@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import com.lohika.book.storage.dao.domain.Book;
-import com.lohika.book.storage.model.Books;
 
 /**
  * Declare Books Dao functionality.
@@ -46,13 +45,13 @@ public final class BookDao extends BaseDao<Book> {
     /**
      * Get all available books
      * 
-     * @return {@link Books}
+     * @return collection of book
      */
-    public Books getAll() {
+    public List<Book> getAll() {
         TypedQuery<Book> createQuery = getEntityManager().createQuery(
                 "Select b from Book b", Book.class);
         List<Book> resultList = createQuery.getResultList();
-        return new Books(resultList);
+        return resultList;
     }
 
 }

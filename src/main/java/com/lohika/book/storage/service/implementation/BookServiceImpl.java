@@ -16,6 +16,7 @@ import com.lohika.book.storage.dao.domain.Book;
 import com.lohika.book.storage.model.Books;
 
 import java.io.InputStream;
+import java.util.List;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
@@ -60,7 +61,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public final Books getAll() {
-        return new BookDao().getAll();
+        List<Book> all = new BookDao().getAll();
+        return new Books(all);
     }
 
     @Override
