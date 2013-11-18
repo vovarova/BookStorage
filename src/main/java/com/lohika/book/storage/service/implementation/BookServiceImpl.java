@@ -1,24 +1,22 @@
 package com.lohika.book.storage.service.implementation;
 
 import java.io.File;
+import java.io.InputStream;
+import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
-import com.lohika.book.storage.service.BookService;
-import com.lohika.book.storage.service.FileService;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+
 import com.lohika.book.storage.dao.BookDao;
 import com.lohika.book.storage.dao.domain.Book;
 import com.lohika.book.storage.model.Books;
-
-import java.io.InputStream;
-import java.util.List;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import com.lohika.book.storage.service.BookService;
+import com.lohika.book.storage.service.FileService;
 
 /**
  * Book Service implementation with root path /book all jax-rs annotations will
@@ -104,8 +102,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public final Response deleteFile(final Integer bookId) {
         final Book book = booksDao.getById(bookId);
-        if (book != null && book.getFileName() != null) {
-            throw new BadRequestException("Cant find book with id " + bookId);
+        if (book == null || book.getFileName() == null) {
+            throw new NotFoundException("Cant find file for book " + bookId);
         } else {
             fileService.deleteFile(book);
             book.setFileName(null);

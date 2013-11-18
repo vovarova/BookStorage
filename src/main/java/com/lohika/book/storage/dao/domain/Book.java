@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Model of Book entity.
@@ -116,6 +117,7 @@ public final class Book {
         return fileName;
     }
 
+    @XmlTransient
     public void setFileName(final String fileName) {
         this.fileName = fileName;
     }

@@ -14,4 +14,5 @@ public final class Constants {
     
     /** Persistence unit name */
     public static final String PERSISTENCE_UNIT = "persistenceUnit";
+    
 }

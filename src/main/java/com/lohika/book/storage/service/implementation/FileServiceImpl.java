@@ -27,7 +27,7 @@ public class FileServiceImpl implements FileService {
     public FileServiceImpl() {
         fileManager = new FileManagerImpl();
     }
-
+    
     /**
      * Initialize {@link FileService} with parameter {@link FileManager}
      * 
@@ -36,6 +36,7 @@ public class FileServiceImpl implements FileService {
     public FileServiceImpl(final FileManager fileManager) {
         this.fileManager = fileManager;
     }
+    
 
     @Override
     public final void saveFile(final InputStream uploadedInputStream,
@@ -63,5 +64,4 @@ public class FileServiceImpl implements FileService {
         }
         return deleted;
     }
-
 }
