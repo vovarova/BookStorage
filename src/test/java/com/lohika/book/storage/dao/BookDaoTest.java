@@ -1,24 +1,18 @@
 package com.lohika.book.storage.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.lohika.book.storage.dao.domain.Book;
-import com.lohika.book.storage.dao.mock.EntityManagerMock;
 
 public class BookDaoTest {
-
-    private BookDao bookDao;
-
-    @Before
-    public void initialize() {
-        bookDao = new BookDao(new EntityManagerMock().getEntityManager());
-    }
-
+    private BookDao bookDao=new BookDao();
+    
     @Test
     public void testGetById() {
         Book book = new Book();
@@ -33,13 +27,15 @@ public class BookDaoTest {
         List<Book> all = bookDao.getAll();
         assertTrue(all.isEmpty());
         int numberBooks = 10;
-
         for (int i = 0; i < numberBooks; i++) {
             bookDao.persistEntity(new Book());
         }
         all = bookDao.getAll();
         assertFalse(all.isEmpty());
         assertEquals(numberBooks, all.size());
+        for (Book book : all) {
+            bookDao.removeEntity(book);
+        }
     }
 
 }

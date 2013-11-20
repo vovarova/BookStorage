@@ -1,15 +1,15 @@
 package integration;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static org.junit.Assert.*;
 
 import org.apache.log4j.Logger;
 import org.glassfish.jersey.filter.LoggingFilter;
@@ -18,30 +18,14 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.grizzly.GrizzlyTestContainerFactory;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import com.lohika.book.storage.dao.DomainManagerFactory;
 import com.lohika.book.storage.dao.domain.Book;
 import com.lohika.book.storage.service.BookService;
 import com.lohika.book.storage.service.implementation.BookServiceImpl;
 
 public class BookServiceIntegrationTest extends JerseyTest {
     private WebTarget baseTarget = target().path("book");
-
-    @Before
-    public void initializeDomainManagerFactory() {
-        EntityManagerFactory createEntityManagerFactory = Persistence
-                .createEntityManagerFactory("persistenceTest");
-        DomainManagerFactory
-                .setEntityManagerFactory(createEntityManagerFactory);
-    }
-
-    @After
-    public void closeDomainManagerFactory() {
-        new DomainManagerFactory().contextDestroyed(null);
-    }
 
     @Override
     protected Application configure() {

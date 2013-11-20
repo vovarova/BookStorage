@@ -1,25 +1,25 @@
 package com.lohika.book.storage.dao;
 
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import com.lohika.book.storage.dao.domain.Book;
-import com.lohika.book.storage.dao.mock.EntityManagerMock;
 
 public class BaseDaoTest {
-    private BaseDao<Book> baseDao;
-
-    @Before
-    public void initialize() {
-        baseDao = new BaseDao<Book>(new EntityManagerMock().getEntityManager());
-    }
-
+    private BaseDao<Book> baseDao=new BaseDao<Book>();
+    
     @Test
     public void testGetEntity() {
         Book entity = new Book();
-        assertNull(baseDao.getEntity(entity.getId(), Book.class));
+        try{            
+            baseDao.getEntity(entity.getId(), Book.class);
+        }catch(Exception e){
+            assertTrue(e instanceof IllegalArgumentException);
+        }
         baseDao.persistEntity(entity);
         Book persistedEntity = baseDao.getEntity(entity.getId(), Book.class);
         assertEquals(entity.getId(), persistedEntity.getId());
@@ -40,7 +40,6 @@ public class BaseDaoTest {
     @Test
     public void testPersistEntity() {
         Book entity = new Book();
-        assertNull(baseDao.getEntity(entity.getId(), Book.class));
         baseDao.persistEntity(entity);
         Book persistedEntity = baseDao.getEntity(entity.getId(), Book.class);
         assertNotNull(persistedEntity);
@@ -51,12 +50,10 @@ public class BaseDaoTest {
     public void testMergeEntity() {
         Book entity = new Book();
         entity.setAuthor("Old Author");
-        assertNull(baseDao.getEntity(entity.getId(), Book.class));
         baseDao.persistEntity(entity);
         Book persistedEntity = baseDao.getEntity(entity.getId(), Book.class);
         assertNotNull(persistedEntity);
         entity.setAuthor("New Athor");
-        assertFalse(entity.getAuthor().equals(persistedEntity.getAuthor()));
         baseDao.mergeEntity(entity);
         persistedEntity = baseDao.getEntity(entity.getId(), Book.class);
         assertEquals(persistedEntity.getAuthor(), entity.getAuthor());
