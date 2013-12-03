@@ -5,7 +5,6 @@
 <module name="Checker">
 
 
-
 	<!-- Checks that each Java package has a Javadoc file used for commenting. -->
 	<!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage -->
 	<!-- MR: Don't require package-info.java in every package -->
