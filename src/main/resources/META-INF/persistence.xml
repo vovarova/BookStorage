@@ -7,15 +7,12 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>com.lohika.book.storage.dao.domain.Book</class>
 		<class>com.lohika.book.storage.dao.domain.BookGenre</class>
-		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-			<property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:h2:D:\DataBase\BookStorage" />
-			<property name="hibernate.connection.username" value="sa" />
-			<property name="hibernate.connection.password" value="sa" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.show.sql" value="true"></property>
-		</properties>
+  		<jta-data-source>java:/jdbc/mydb</jta-data-source>
+      		<properties>
+         		<property name="hibernate.hbm2ddl.auto" value="update" />
+         		<property name="hibernate.show_sql" value="false" />
+        		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      		</properties>
 	</persistence-unit>
 	<persistence-unit name="persistenceTest"
 		transaction-type="RESOURCE_LOCAL">
