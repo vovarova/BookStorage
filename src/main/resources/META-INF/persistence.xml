@@ -6,9 +6,9 @@
 	<persistence-unit name="persistenceUnit"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+  		<jta-data-source>java:/jdbc/mydb</jta-data-source>
 		<class>com.lohika.book.storage.dao.domain.Book</class>
 		<class>com.lohika.book.storage.dao.domain.BookGenre</class>
-  		<jta-data-source>java:/jdbc/mydb</jta-data-source>
       		<properties>
          		<property name="hibernate.hbm2ddl.auto" value="update" />
          		<property name="hibernate.show_sql" value="false" />
