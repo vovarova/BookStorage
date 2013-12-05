@@ -6,7 +6,7 @@
 	<persistence-unit name="persistenceUnit"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-  		<jta-data-source>java:comp/env/jdbc/mydb</jta-data-source>
+  		<non-jta-data-source>java:comp/env/jdbc/mydb</non-jta-data-source>
 		<class>com.lohika.book.storage.dao.domain.Book</class>
 		<class>com.lohika.book.storage.dao.domain.BookGenre</class>
       		<properties>
