@@ -11,7 +11,7 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
             <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:h2:..\Storage\BookStorage" />
+            <property name="hibernate.connection.url" value="jdbc:h2:DBStorage\BookStorage" />
             <property name="hibernate.connection.username" value="sa" />
             <property name="hibernate.connection.password" value="sa" />
             <property name="hibernate.hbm2ddl.auto" value="create-drop" />
@@ -26,7 +26,7 @@
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 			<property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:h2:..\Storage\TestBookStorage" />
+			<property name="hibernate.connection.url" value="jdbc:h2:DBStorage\TestBookStorage" />
 			<property name="hibernate.connection.username" value="sa" />
 			<property name="hibernate.connection.password" value="sa" />
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
