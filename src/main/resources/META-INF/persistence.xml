@@ -3,17 +3,16 @@
 <persistence version="2.0"
    xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="persistenceUnit"
-		transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-  		<jta-data-source>java:/jdbc/mydb</jta-data-source>
+	<persistence-unit name="persistenceUnit">
+      		<non-jta-data-source>java:comp/env/jdbc/mydb</non-jta-data-source>
 		<class>com.lohika.book.storage.dao.domain.Book</class>
 		<class>com.lohika.book.storage.dao.domain.BookGenre</class>
-      		<properties>
-         		<property name="hibernate.hbm2ddl.auto" value="update" />
-         		<property name="hibernate.show_sql" value="false" />
-        		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-      		</properties>
+	        <properties>
+	            <property name="hibernate.hbm2ddl.auto" value="update"/>
+	            <property name="hibernate.show_sql" value="true"/>
+	            <property name="hibernate.format_sql" value="true"/>
+	            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+	        </properties>
 	</persistence-unit>
 	<persistence-unit name="persistenceTest"
 		transaction-type="RESOURCE_LOCAL">
