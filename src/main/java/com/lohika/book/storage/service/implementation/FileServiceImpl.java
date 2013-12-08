@@ -28,7 +28,7 @@ public class FileServiceImpl implements FileService {
      * Initialize {@link FileService} with Default FileManager
      */
     public FileServiceImpl() {
-        fileManager = new FileManagerImpl();
+        fileManager = new FileManagerStub();
     }
     
     private static String getFileStorage() {

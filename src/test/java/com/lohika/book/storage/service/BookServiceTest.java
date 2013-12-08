@@ -67,7 +67,7 @@ public class BookServiceTest {
         assertEquals(bookCollection.size(), collectionSize);
     }
 
-    @Test
+//    @Test
     public void testFileProcessing() {
         Book book = new Book("test", "test", null, null);
         Book persistedBook = bookService.create(book);
