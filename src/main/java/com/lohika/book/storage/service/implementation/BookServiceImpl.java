@@ -37,16 +37,16 @@ public class BookServiceImpl implements BookService {
     private BookDao booksDao = new BookDao();
     private FileService fileService = new FileServiceImpl();
 
+    @Override
     @GET
     @Path("{id}")
-    @Override
     public final Book getById(final @PathParam(value = "id") Integer id) {
         return booksDao.getById(id);
     }
 
+    @Override
     @DELETE
     @Path("{id}")
-    @Override
     public final void deleteById(final @PathParam(value = "id") Integer id) {
         final Book book = booksDao.getById(id);
         if (book != null) {
@@ -57,39 +57,39 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
     @POST
     @Path("/")
     @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    @Override
     public final Book create(final Book book) {
         booksDao.persistEntity(book);
         return book;
     }
 
+    @Override
     @PUT
     @Path("/")
     @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    @Override
     public final Book update(final Book book) {
         booksDao.mergeEntity(book);
         return book;
 
     }
 
+    @Override
     @GET
     @Path("all")
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    @Override
     public final Books getAll() {
         List<Book> all = new BookDao().getAll();
         return new Books(all);
     }
 
+    @Override
     @GET
     @Path("file/{bookId}")
-    @Override
     public final Response downloadFile(final @PathParam(value = "bookId") Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
@@ -107,10 +107,10 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
     @POST
     @Path("file/{bookId}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Override
     public final Response uploadFile(final @PathParam(value = "bookId") Integer bookId,
             final @FormDataParam("file") InputStream uploadedInputStream,
             final @FormDataParam("file") FormDataContentDisposition fileDetail) {
@@ -128,9 +128,9 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
     @DELETE
     @Path("file/{bookId}")
-    @Override
     public final Response deleteFile(final @PathParam(value = "bookId") Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
