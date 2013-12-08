@@ -40,14 +40,14 @@ public class BookServiceImpl implements BookService {
     @Override
     @GET
     @Path("{id}")
-    public final Book getById(final @PathParam(value = "id") Integer id) {
+    public final Book getById(@PathParam(value = "id") final Integer id) {
         return booksDao.getById(id);
     }
 
     @Override
     @DELETE
     @Path("{id}")
-    public final void deleteById(final @PathParam(value = "id") Integer id) {
+    public final void deleteById(@PathParam(value = "id") final Integer id) {
         final Book book = booksDao.getById(id);
         if (book != null) {
             booksDao.removeEntity(book);
@@ -91,7 +91,7 @@ public class BookServiceImpl implements BookService {
     @GET
     @Path("file/{bookId}")
     public final Response downloadFile(
-            final @PathParam(value = "bookId") Integer bookId) {
+            @PathParam(value = "bookId") final Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
             throw new NotFoundException("Cant find file for book with id "
@@ -113,9 +113,9 @@ public class BookServiceImpl implements BookService {
     @Path("file/{bookId}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public final Response uploadFile(
-            final @PathParam(value = "bookId") Integer bookId,
-            final @FormDataParam("file") InputStream uploadedInputStream,
-            final @FormDataParam("file") FormDataContentDisposition fileDetail) {
+            @PathParam(value = "bookId") final Integer bookId,
+            @FormDataParam("file") final InputStream uploadedInputStream,
+            @FormDataParam("file") final FormDataContentDisposition fileDetail) {
         final Book book = booksDao.getById(bookId);
         if (book == null) {
             throw new NotFoundException("Cant find book with id " + bookId);
@@ -134,7 +134,7 @@ public class BookServiceImpl implements BookService {
     @DELETE
     @Path("file/{bookId}")
     public final Response deleteFile(
-            final @PathParam(value = "bookId") Integer bookId) {
+            @PathParam(value = "bookId") final Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
             throw new NotFoundException("Cant find file for book " + bookId);
