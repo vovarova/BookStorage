@@ -25,7 +25,7 @@ public class FileManagerTest {
     private static final String FILE_SEPARATOR = System
             .getProperty("file.separator");
 
-    @Test
+
     public void testFileProcessingScenario() throws IOException {
         String testText = "Thids is test text";
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
