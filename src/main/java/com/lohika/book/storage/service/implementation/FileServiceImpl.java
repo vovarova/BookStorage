@@ -1,17 +1,11 @@
 package com.lohika.book.storage.service.implementation;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-
-import com.lohika.book.storage.service.FileService;
-import com.lohika.book.storage.service.FileManager;
-import com.lohika.book.storage.config.ConfigurationKey;
-import com.lohika.book.storage.config.Configurator;
 import com.lohika.book.storage.dao.domain.Book;
+import com.lohika.book.storage.service.FileManager;
+import com.lohika.book.storage.service.FileService;
 
 /**
  * FileService implementing store files in file system
@@ -21,7 +15,7 @@ import com.lohika.book.storage.dao.domain.Book;
 public class FileServiceImpl implements FileService {
 
     private static final String FILE_STORAGE = getFileStorage(); 
-    private static final Logger LOGGER = Logger.getLogger(FileServiceImpl.class);
+//    private static final Logger LOGGER = Logger.getLogger(FileServiceImpl.class);
     private final FileManager fileManager;
 
     /** 
@@ -32,17 +26,17 @@ public class FileServiceImpl implements FileService {
     }
     
     private static String getFileStorage() {
-        String fileStoragePath = Configurator.getInstance().getProperty(
-                ConfigurationKey.FILE_STORAGE_URL);
-        File fileStorage = new File(fileStoragePath);
-        if (!fileStorage.exists()) {
-            try {
-                FileUtils.forceMkdir(fileStorage);
-            } catch (IOException e) {
-                fileStoragePath = "..";
-                LOGGER.error(e);
-            }
-        }
+//        String fileStoragePath = Configurator.getInstance().getProperty(
+//                ConfigurationKey.FILE_STORAGE_URL);
+//        File fileStorage = new File(fileStoragePath);
+//        if (!fileStorage.exists()) {
+//            try {
+//                FileUtils.forceMkdir(fileStorage);
+//            } catch (IOException e) {
+//                fileStoragePath = "..";
+//                LOGGER.error(e);
+//            }
+//        }
         return "";
     }
 
