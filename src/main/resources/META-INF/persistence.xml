@@ -9,11 +9,11 @@
         <class>com.lohika.book.storage.dao.domain.Book</class>
         <class>com.lohika.book.storage.dao.domain.BookGenre</class>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-            <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:h2:DBStorage\BookStorage" />
-            <property name="hibernate.connection.username" value="sa" />
-            <property name="hibernate.connection.password" value="sa" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://sql4.freesqldatabase.com:3306/sql424394" />
+            <property name="hibernate.connection.username" value="sql424394" />
+            <property name="hibernate.connection.password" value="nK6*uI6*" />
             <property name="hibernate.hbm2ddl.auto" value="create-drop" />
             <property name="hibernate.show.sql" value="true"></property>
         </properties>

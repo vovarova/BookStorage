@@ -90,7 +90,8 @@ public class BookServiceImpl implements BookService {
     @Override
     @GET
     @Path("file/{bookId}")
-    public final Response downloadFile(final @PathParam(value = "bookId") Integer bookId) {
+    public final Response downloadFile(
+            final @PathParam(value = "bookId") Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
             throw new NotFoundException("Cant find file for book with id "
@@ -111,7 +112,8 @@ public class BookServiceImpl implements BookService {
     @POST
     @Path("file/{bookId}")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public final Response uploadFile(final @PathParam(value = "bookId") Integer bookId,
+    public final Response uploadFile(
+            final @PathParam(value = "bookId") Integer bookId,
             final @FormDataParam("file") InputStream uploadedInputStream,
             final @FormDataParam("file") FormDataContentDisposition fileDetail) {
         final Book book = booksDao.getById(bookId);
@@ -131,7 +133,8 @@ public class BookServiceImpl implements BookService {
     @Override
     @DELETE
     @Path("file/{bookId}")
-    public final Response deleteFile(final @PathParam(value = "bookId") Integer bookId) {
+    public final Response deleteFile(
+            final @PathParam(value = "bookId") Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
             throw new NotFoundException("Cant find file for book " + bookId);
