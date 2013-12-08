@@ -8,7 +8,7 @@ import javax.ws.rs.core.Application;
 import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
-import com.lohika.book.storage.service.BookService;
+import com.lohika.book.storage.service.implementation.BookServiceImpl;
 
 /**
  * Application configs to use MultiPartFeatures.
@@ -21,7 +21,7 @@ public class ApplicationConfig extends Application {
         final Set<Class<?>> classes = new HashSet<Class<?>>();
         // register resources and features
         classes.add(MultiPartFeature.class);
-        classes.add(BookService.class);
+        classes.add(BookServiceImpl.class);
         classes.add(LoggingFilter.class);
         return classes;
     }

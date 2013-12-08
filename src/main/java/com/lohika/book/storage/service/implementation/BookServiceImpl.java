@@ -5,12 +5,21 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.lohika.book.storage.dao.BookDao;
 import com.lohika.book.storage.dao.domain.Book;
@@ -28,13 +37,17 @@ public class BookServiceImpl implements BookService {
     private BookDao booksDao = new BookDao();
     private FileService fileService = new FileServiceImpl();
 
+    @GET
+    @Path("{id}")
     @Override
-    public final Book getById(final Integer id) {
+    public final Book getById(final @PathParam(value = "id") Integer id) {
         return booksDao.getById(id);
     }
 
+    @DELETE
+    @Path("{id}")
     @Override
-    public final void deleteById(final Integer id) {
+    public final void deleteById(final @PathParam(value = "id") Integer id) {
         final Book book = booksDao.getById(id);
         if (book != null) {
             booksDao.removeEntity(book);
@@ -44,12 +57,20 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @POST
+    @Path("/")
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Override
     public final Book create(final Book book) {
         booksDao.persistEntity(book);
         return book;
     }
 
+    @PUT
+    @Path("/")
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Override
     public final Book update(final Book book) {
         booksDao.mergeEntity(book);
@@ -57,14 +78,19 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    @GET
+    @Path("all")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Override
     public final Books getAll() {
         List<Book> all = new BookDao().getAll();
         return new Books(all);
     }
 
+    @GET
+    @Path("file/{bookId}")
     @Override
-    public final Response downloadFile(final Integer bookId) {
+    public final Response downloadFile(final @PathParam(value = "bookId") Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
             throw new NotFoundException("Cant find file for book with id "
@@ -81,10 +107,13 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @POST
+    @Path("file/{bookId}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Override
-    public final Response uploadFile(final Integer bookId,
-            final InputStream uploadedInputStream,
-            final FormDataContentDisposition fileDetail) {
+    public final Response uploadFile(final @PathParam(value = "bookId") Integer bookId,
+            final @FormDataParam("file") InputStream uploadedInputStream,
+            final @FormDataParam("file") FormDataContentDisposition fileDetail) {
         final Book book = booksDao.getById(bookId);
         if (book == null) {
             throw new NotFoundException("Cant find book with id " + bookId);
@@ -99,8 +128,10 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @DELETE
+    @Path("file/{bookId}")
     @Override
-    public final Response deleteFile(final Integer bookId) {
+    public final Response deleteFile(final @PathParam(value = "bookId") Integer bookId) {
         final Book book = booksDao.getById(bookId);
         if (book == null || book.getFileName() == null) {
             throw new NotFoundException("Cant find file for book " + bookId);
