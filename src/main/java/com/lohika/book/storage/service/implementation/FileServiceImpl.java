@@ -43,7 +43,7 @@ public class FileServiceImpl implements FileService {
                 LOGGER.error(e);
             }
         }
-        return fileStoragePath;
+        return "";
     }
 
     /**
