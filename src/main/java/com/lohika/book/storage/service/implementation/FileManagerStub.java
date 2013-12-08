@@ -5,29 +5,37 @@ import java.io.InputStream;
 
 import com.lohika.book.storage.service.FileManager;
 
+/**
+ * This is fileManager stub
+ * 
+ * @author vroman
+ * 
+ */
 public class FileManagerStub implements FileManager {
 
     @Override
-    public void saveFile(InputStream uploadedInputStream,
-            String fileStorageLocation, String fileName) {
+    public void saveFile(final InputStream uploadedInputStream,
+            final String fileStorageLocation, final String fileName) {
         // TODO Auto-generated method stub
 
     }
 
     @Override
-    public File getFile(String fileStorageLocation, String fileName) {
+    public File getFile(final String fileStorageLocation, final String fileName) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public boolean deleteFile(String fileStorageLocation, String fileName) {
+    public boolean deleteFile(final String fileStorageLocation,
+            final String fileName) {
         // TODO Auto-generated method stub
         return false;
     }
 
     @Override
-    public String concatLocation(String baseLocation, String... chunks) {
+    public String concatLocation(final String baseLocation,
+            final String... chunks) {
         // TODO Auto-generated method stub
         return null;
     }
